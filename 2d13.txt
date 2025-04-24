@@ -1,0 +1,36 @@
+import cv2
+import numpy as np
+
+# Function to extract two features (mean and standard deviation) from an image
+def extract_two_features(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+    mean = np.mean(gray)  # Compute the mean pixel value
+    stddev = np.std(gray)  # Compute the standard deviation of pixel values
+    return np.array([mean, stddev])
+
+# Function to load and extract features from an image
+def load_and_extract_features(image_path, label):
+    img = cv2.imread(image_path)
+    if img is not None:
+        features = extract_two_features(img)  # Extract features
+        print(f"Features for {'Cat' if label == 1 else 'Dog'} image ({image_path}):", features)
+        return features, label
+    else:
+        print(f"Error loading image: {image_path}")
+        return None, None
+
+# Provide your image paths
+cat_image_path = r"C:\Users\HP\OneDrive\Desktop\pexels-kmerriman-20787.jpg"
+dog_image_path = r"C:\Users\HP\OneDrive\Desktop\Cute_dog.jpg"
+
+# Extract features and labels for cat and dog images
+cat_features, cat_label = load_and_extract_features(cat_image_path, label=1)
+dog_features, dog_label = load_and_extract_features(dog_image_path, label=0)
+
+# Combine the features and labels into arrays if both images were loaded successfully
+if cat_features is not None and dog_features is not None:
+    features = np.array([cat_features, dog_features])
+    labels = np.array([cat_label, dog_label])
+    print("\n2D features for both Cat and Dog images have been extracted and displayed.")
+else:
+    print("\nError in extracting features for one or more images.")
