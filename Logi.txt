@@ -1,0 +1,18 @@
+from sklearn.linear_model import LogisticRegression
+
+# Sample data
+X = [[165,19], [175,32], [136,35], [174,65]]
+Y = ['Man', 'Woman', 'Woman', 'Man']
+
+# Initialize the model
+model = LogisticRegression()
+
+# Train the model
+model.fit(X, Y)
+
+# Make a prediction
+prediction = model.predict([[169,19]])
+print("Prediction:", prediction[0])
+
+# Check accuracy
+print("Accuracy:", model.score(X, Y))

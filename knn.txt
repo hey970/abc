@@ -1,0 +1,42 @@
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+import matplotlib.pyplot as plt
+
+# Declare data as NumPy arrays directly
+X = np.array([
+    [150, 45], [152, 48], [155, 50], [157, 52], [160, 54],
+    [162, 55], [163, 57], [164, 58], [166, 60], [168, 62],
+    [170, 65], [172, 67], [174, 70], [176, 72], [178, 75],
+    [180, 78], [182, 80], [184, 83], [186, 85], [188, 88]
+])
+y = np.array([
+    0, 0, 0, 0, 0, 
+    0, 0, 0, 1, 1, 
+    1, 1, 1, 1, 1, 
+    1, 1, 1, 1, 1
+])
+
+# KNN Classifier
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X, y)
+
+# Predict
+new_data = np.array([[165, 60]])
+predicted_class = knn.predict(new_data)
+print(f"Predicted class for {new_data[0]} is: {predicted_class[0]}")
+
+# Visualization
+for class_value in np.unique(y):
+    plt.scatter(
+        X[y == class_value][:, 0],
+        X[y == class_value][:, 1],
+        label=f'Class {class_value}'
+    )
+
+plt.scatter(new_data[0][0], new_data[0][1], color='red', marker='X', s=100, label='New Data (165, 60)')
+plt.xlabel('Height (cm)')
+plt.ylabel('Weight (kg)')
+plt.title('KNN Classification: Height vs Weight')
+plt.legend()
+plt.grid(True)
+plt.show()

@@ -1,0 +1,53 @@
+import pandas as pd
+import numpy as np
+
+# Original data
+data = {
+    'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    'Name': ['Alice', 'Bob', 'Charlie', None, 'David', 'Eve', 'Alice', 'Frank', 'Grace'],
+    'Age': [25, 29, 28, None, 32, 35, 25, 100, 26],
+    'Salary': [50000, 60000, 55000, 70000, None, 80000, 50000, 100000, 65000],
+    'Department': ['HR', 'IT', 'IT', 'HR', 'IT', 'Sales', 'HR', 'HR', 'IT'],
+    'Join Date': ['2020-01-01', '2020-05-15', '2021-03-20', '2020-11-25', '2021-08-30', None, '2020-01-01', '2022-06-18', '2021-07-11'],
+    'Bonus': [5000, 6000, 5500, 7000, None, 8000, 5000, 10000, 6500]
+}
+
+df = pd.DataFrame(data)
+print("Original DataFrame:")
+print(df)
+
+# Remove rows where Age, Salary, or Bonus is missing
+df_no_missing = df.dropna(subset=['Age', 'Salary', 'Bonus'])
+
+print("\nDataFrame after removing rows with missing Age, Salary, or Bonus:")
+print(df_no_missing)
+
+# Remove duplicate rows based on the 'Name' column (keep first)
+df_no_duplicates = df_no_missing.drop_duplicates(subset=["Name"])
+
+print("\nDataFrame after removing duplicate names:")
+print(df_no_duplicates)
+
+# Calculate IQR (Interquartile Range) for Age and Salary
+Q1_age, Q3_age = df_no_duplicates["Age"].quantile([0.25, 0.75])
+Q1_salary, Q3_salary = df_no_duplicates["Salary"].quantile([0.25, 0.75])
+
+IQR_age = Q3_age - Q1_age
+IQR_salary = Q3_salary - Q1_salary
+
+# Define acceptable range
+lower_age = Q1_age - 1.5 * IQR_age
+upper_age = Q3_age + 1.5 * IQR_age
+lower_salary = Q1_salary - 1.5 * IQR_salary
+upper_salary = Q3_salary + 1.5 * IQR_salary
+
+# Filter out outliers
+df_no_outliers = df_no_duplicates[
+    (df_no_duplicates["Age"] >= lower_age) & (df_no_duplicates["Age"] <= upper_age) &
+    (df_no_duplicates["Salary"] >= lower_salary) & (df_no_duplicates["Salary"] <= upper_salary)
+]
+
+print("\nDataFrame after removing outliers:")
+print(df_no_outliers)
+print("\nFinal Cleaned DataFrame:")
+print(df_no_outliers)

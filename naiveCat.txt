@@ -1,0 +1,21 @@
+from sklearn.naive_bayes import GaussianNB
+import numpy as np
+X_train = [
+ [210.0, 50.0],
+ [205.5, 49.5],
+ [215.0, 51.0],
+ [199.0, 48.0],
+ [202.3, 52.1],  # Cat group
+
+ [230.0, 60.0],
+ [250.0, 65.0],
+ [240.0, 62.0],
+ [245.0, 63.5],
+ [235.0, 61.0]   # Dog group
+]
+y_train = ['Cat', 'Cat', 'Cat', 'Cat', 'Cat', 'Dog', 'Dog', 'Dog', 'Dog', 'Dog']
+X_test = [[219.74617433, 53.87654393]]
+model = GaussianNB()
+model.fit(X_train, y_train)
+prediction = model.predict(X_test)
+print("The predicted class for the data", X_test[0], "is:", prediction[0])

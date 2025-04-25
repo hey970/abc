@@ -1,0 +1,25 @@
+from sklearn.linear_model import LinearRegression
+
+# Feature: [Year, Some rate]
+X = [
+    [2001, 5.2], [2002, 5.1], [2003, 5.1], [2004, 4.9], [2005, 5.0],
+    [2006, 5.1], [2007, 5.4], [2008, 5.6], [2009, 5.9], [2010, 5.8],
+    [2011, 6.2], [2012, 6.0], [2013, 5.8], [2014, 6.1], [2015, 6.4]
+]
+
+# Target output (what you want to predict)
+Y = [2.5, 2.52, 2.54, 2.48, 2.52, 2.54, 2.55, 2.7, 2.9, 3.2, 3.16, 3.28, 3.2, 3.15, 3.26]
+
+# Initialize the Linear Regression model
+LinR_model = LinearRegression()
+
+# Train the model
+LinR_model.fit(X, Y)
+
+# Predict for year 2021 with index 6.1
+prediction = LinR_model.predict([[2021, 6.1]])
+print("Prediction for 2021, 6.1:", prediction[0])
+
+# Predict for year 2022 with index 6.4
+prediction_2022 = LinR_model.predict([[2022, 6.4]])
+print("Prediction for 2022, 6.4:", prediction_2022[0])

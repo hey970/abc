@@ -1,0 +1,22 @@
+from efficient_apriori import apriori
+
+# Define transactions
+transactions = [
+    ['butter', 'milk', 'bread'],
+    ['butter', 'milk', 'apple'],
+    ['bread', 'milk', 'banana'],
+    ['milk', 'bread', 'butter']
+]
+
+# Apply the Apriori algorithm
+itemsets, rules = apriori(transactions, min_support=0.3, min_confidence=0.8)
+
+# Print Frequent Itemsets
+print("Frequent Itemsets:")
+for k, v in itemsets.items():
+    print(f"Level {k}: {v}")
+
+# Print Association Rules
+print("\nAssociation Rules:")
+for rule in rules:
+    print(rule)

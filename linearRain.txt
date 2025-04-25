@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Data: Year vs Rainfall (Rainfall data in mm)
+X = [[2001], [2002], [2003], [2004], [2005], [2006], [2007], [2008], [2009], [2010], 
+     [2011], [2012], [2013], [2014], [2015], [2016], [2017], [2018], [2019], [2020]]
+Y = [2.5, 2.52, 2.54, 2.48, 2.52, 2.54, 2.55, 2.7, 2.9, 3.2, 3.16, 3.28, 3.2, 3.15, 
+     3.26, 3.29, 3.17, 3.25, 3.29, 3.18]  # Rainfall in mm corresponding to each year
+
+# Initialize the linear regression model
+LinR_model = LinearRegression()
+
+# Fit the model with the data (Year as X and Rainfall as Y)
+LinR_model.fit(X, Y)
+
+# Predict rainfall for year 2026
+prediction_2026 = LinR_model.predict([[2026]])
+print("Predicted rainfall for the year 2026:", prediction_2026)
+
+# Scatter plot of data points
+plt.scatter(X, Y, color='blue', label='Actual Data')  # Original data points
+
+# Plot the regression line
+plt.plot(X, LinR_model.predict(X), color='red', label='Regression Line')  # Fitted line
+
+# Mark the predicted point for 2026
+plt.scatter([2026], prediction_2026, color='green', marker='X', s=100, label=f'Prediction (2026): {prediction_2026[0]:.2f} mm')
+
+# Adding labels and title
+plt.xlabel('Year')
+plt.ylabel('Rainfall (mm)')
+plt.title('Year vs Rainfall Prediction using Linear Regression')
+
+# Displaying legend and grid
+plt.legend()
+plt.grid(True)
+plt.show()
